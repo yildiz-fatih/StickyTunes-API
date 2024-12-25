@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StickyTunes.Business.DTOs.Comment;
 using StickyTunes.Business.Services.Interfaces;
@@ -36,6 +37,7 @@ public class CommentsController : ControllerBase
         return Ok(comment);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCommentRequest request)
     {
@@ -46,6 +48,7 @@ public class CommentsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = userId}, request);
     }
 
+    [Authorize]
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
