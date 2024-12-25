@@ -12,7 +12,6 @@ public static class BusinessServicesRegistration
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<SpotifyService>();
         services.AddScoped<ICommentService, CommentService>();
-        services.AddScoped<IReactionService, ReactionService>();
         
         return services;
     }

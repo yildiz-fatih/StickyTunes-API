@@ -11,7 +11,7 @@ using StickyTunes.Data;
 namespace StickyTunes.Data.Migrations
 {
     [DbContext(typeof(StickyTunesDbContext))]
-    [Migration("20241225122113_Mig")]
+    [Migration("20241225214808_Mig")]
     partial class Mig
     {
         /// <inheritdoc />
@@ -246,35 +246,6 @@ namespace StickyTunes.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("StickyTunes.Data.Models.Reaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApiUserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DatePosted")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Emoji")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApiUserId");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("Reactions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("StickyTunes.Data.Models.ApiRole", null)
@@ -337,33 +308,9 @@ namespace StickyTunes.Data.Migrations
                     b.Navigation("ApiUser");
                 });
 
-            modelBuilder.Entity("StickyTunes.Data.Models.Reaction", b =>
-                {
-                    b.HasOne("StickyTunes.Data.Models.ApiUser", "ApiUser")
-                        .WithMany()
-                        .HasForeignKey("ApiUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StickyTunes.Data.Models.Comment", "Comment")
-                        .WithMany("Reactions")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApiUser");
-
-                    b.Navigation("Comment");
-                });
-
             modelBuilder.Entity("StickyTunes.Data.Models.ApiUser", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("StickyTunes.Data.Models.Comment", b =>
-                {
-                    b.Navigation("Reactions");
                 });
 #pragma warning restore 612, 618
         }

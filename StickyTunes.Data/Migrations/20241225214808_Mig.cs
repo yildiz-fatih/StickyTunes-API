@@ -191,35 +191,6 @@ namespace StickyTunes.Data.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "Reactions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Emoji = table.Column<string>(type: "longtext", nullable: false),
-                    DatePosted = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ApiUserId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    CommentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reactions_AspNetUsers_ApiUserId",
-                        column: x => x.ApiUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reactions_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -261,16 +232,6 @@ namespace StickyTunes.Data.Migrations
                 name: "IX_Comments_ApiUserId",
                 table: "Comments",
                 column: "ApiUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reactions_ApiUserId",
-                table: "Reactions",
-                column: "ApiUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reactions_CommentId",
-                table: "Reactions",
-                column: "CommentId");
         }
 
         /// <inheritdoc />
@@ -292,13 +253,10 @@ namespace StickyTunes.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Reactions");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

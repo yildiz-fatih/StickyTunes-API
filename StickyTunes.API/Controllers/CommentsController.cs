@@ -2,8 +2,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StickyTunes.Business.DTOs.Comment;
-using StickyTunes.Business.DTOs.Reaction;
-using StickyTunes.Business.Services.Implementations;
 using StickyTunes.Business.Services.Interfaces;
 
 namespace StickyTunes.API.Controllers;
@@ -13,12 +11,10 @@ namespace StickyTunes.API.Controllers;
 public class CommentsController : ControllerBase
 {
     private readonly ICommentService _commentService;
-    private readonly IReactionService _reactionService;
 
-    public CommentsController(ICommentService commentService, IReactionService reactionService)
+    public CommentsController(ICommentService commentService)
     {
         _commentService = commentService;
-        _reactionService = reactionService;
     }
     
     [HttpGet]
@@ -60,24 +56,5 @@ public class CommentsController : ControllerBase
         await _commentService.DeleteAsync(id);
         
         return NoContent();
-    }
-
-    [Authorize]
-    [HttpPost("{id}/reactions")]
-    public async Task<IActionResult> AddReaction([FromRoute] int id, [FromBody] CreateReactionRequest request)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
-        await _reactionService.AddAsync(request, id, userId);
-        
-        return NoContent();
-    }
-
-    [HttpGet("{id}/reactions")]
-    public async Task<IActionResult> GetReactions([FromRoute] int id)
-    {
-        var reactions = await _reactionService.GetAllByCommentIdAsync(id);
-        
-        return Ok(reactions);
     }
 }

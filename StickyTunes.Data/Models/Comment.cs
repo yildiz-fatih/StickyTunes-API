@@ -9,6 +9,4 @@ public class Comment
     
     public string ApiUserId { get; set; }
     public ApiUser ApiUser { get; set; }
-    
-    public ICollection<Reaction> Reactions { get; set; } = new List<Reaction>();
 }
