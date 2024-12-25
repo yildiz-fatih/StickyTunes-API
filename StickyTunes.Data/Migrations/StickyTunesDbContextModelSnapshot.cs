@@ -19,21 +19,6 @@ namespace StickyTunes.Data.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("ArtistTrack", b =>
-                {
-                    b.Property<int>("ArtistsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TracksId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArtistsId", "TracksId");
-
-                    b.HasIndex("TracksId");
-
-                    b.ToTable("ArtistTrack");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -230,21 +215,6 @@ namespace StickyTunes.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("StickyTunes.Data.Models.Artist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Artists");
-                });
-
             modelBuilder.Entity("StickyTunes.Data.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -258,18 +228,17 @@ namespace StickyTunes.Data.Migrations
                     b.Property<DateTime>("DatePosted")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("SpotifyTrackId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApiUserId");
-
-                    b.HasIndex("TrackId");
 
                     b.ToTable("Comments");
                 });
@@ -301,44 +270,6 @@ namespace StickyTunes.Data.Migrations
                     b.HasIndex("CommentId");
 
                     b.ToTable("Reactions");
-                });
-
-            modelBuilder.Entity("StickyTunes.Data.Models.Track", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("AlbumName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("SpotifyTrackId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tracks");
-                });
-
-            modelBuilder.Entity("ArtistTrack", b =>
-                {
-                    b.HasOne("StickyTunes.Data.Models.Artist", null)
-                        .WithMany()
-                        .HasForeignKey("ArtistsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StickyTunes.Data.Models.Track", null)
-                        .WithMany()
-                        .HasForeignKey("TracksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -400,15 +331,7 @@ namespace StickyTunes.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StickyTunes.Data.Models.Track", "Track")
-                        .WithMany("Comments")
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ApiUser");
-
-                    b.Navigation("Track");
                 });
 
             modelBuilder.Entity("StickyTunes.Data.Models.Reaction", b =>
@@ -438,11 +361,6 @@ namespace StickyTunes.Data.Migrations
             modelBuilder.Entity("StickyTunes.Data.Models.Comment", b =>
                 {
                     b.Navigation("Reactions");
-                });
-
-            modelBuilder.Entity("StickyTunes.Data.Models.Track", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

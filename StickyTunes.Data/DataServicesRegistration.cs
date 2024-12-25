@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StickyTunes.Data.Models;
+using StickyTunes.Data.Repositories.Implementations;
+using StickyTunes.Data.Repositories.Interfaces;
 
 namespace StickyTunes.Data;
 
@@ -16,6 +18,8 @@ public static class DataServicesRegistration
         services.AddIdentity<ApiUser, ApiRole>()
             .AddEntityFrameworkStores<StickyTunesDbContext>()
             .AddDefaultTokenProviders();
+
+        services.AddScoped<ICommentRepository, CommentRepository>();
         
         return services;
     }

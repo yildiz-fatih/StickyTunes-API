@@ -10,6 +10,8 @@ public static class BusinessServicesRegistration
     {
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<SpotifyService>();
+        services.AddScoped<ICommentService, CommentService>();
         
         return services;
     }

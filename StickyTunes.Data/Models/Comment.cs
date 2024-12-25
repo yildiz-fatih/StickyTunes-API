@@ -4,10 +4,8 @@ public class Comment
 {
     public int Id { get; set; }
     public string Text { get; set; }
+    public string SpotifyTrackId { get; set; }
     public DateTime DatePosted { get; set; }
-    
-    public int TrackId { get; set; }
-    public Track Track { get; set; }
     
     public string ApiUserId { get; set; }
     public ApiUser ApiUser { get; set; }

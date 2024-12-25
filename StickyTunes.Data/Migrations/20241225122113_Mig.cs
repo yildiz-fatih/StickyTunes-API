@@ -16,20 +16,6 @@ namespace StickyTunes.Data.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Artists",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Artists", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -68,22 +54,6 @@ namespace StickyTunes.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Tracks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    SpotifyTrackId = table.Column<string>(type: "longtext", nullable: false),
-                    Name = table.Column<string>(type: "longtext", nullable: false),
-                    AlbumName = table.Column<string>(type: "longtext", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tracks", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -199,39 +169,14 @@ namespace StickyTunes.Data.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ArtistTrack",
-                columns: table => new
-                {
-                    ArtistsId = table.Column<int>(type: "int", nullable: false),
-                    TracksId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArtistTrack", x => new { x.ArtistsId, x.TracksId });
-                    table.ForeignKey(
-                        name: "FK_ArtistTrack_Artists_ArtistsId",
-                        column: x => x.ArtistsId,
-                        principalTable: "Artists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArtistTrack_Tracks_TracksId",
-                        column: x => x.TracksId,
-                        principalTable: "Tracks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(type: "longtext", nullable: false),
+                    SpotifyTrackId = table.Column<string>(type: "longtext", nullable: false),
                     DatePosted = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    TrackId = table.Column<int>(type: "int", nullable: false),
                     ApiUserId = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
@@ -241,12 +186,6 @@ namespace StickyTunes.Data.Migrations
                         name: "FK_Comments_AspNetUsers_ApiUserId",
                         column: x => x.ApiUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comments_Tracks_TrackId",
-                        column: x => x.TrackId,
-                        principalTable: "Tracks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -280,11 +219,6 @@ namespace StickyTunes.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArtistTrack_TracksId",
-                table: "ArtistTrack",
-                column: "TracksId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -329,11 +263,6 @@ namespace StickyTunes.Data.Migrations
                 column: "ApiUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_TrackId",
-                table: "Comments",
-                column: "TrackId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reactions_ApiUserId",
                 table: "Reactions",
                 column: "ApiUserId");
@@ -347,9 +276,6 @@ namespace StickyTunes.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ArtistTrack");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -369,9 +295,6 @@ namespace StickyTunes.Data.Migrations
                 name: "Reactions");
 
             migrationBuilder.DropTable(
-                name: "Artists");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -379,9 +302,6 @@ namespace StickyTunes.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Tracks");
         }
     }
 }
