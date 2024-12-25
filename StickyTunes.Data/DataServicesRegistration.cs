@@ -20,6 +20,7 @@ public static class DataServicesRegistration
             .AddDefaultTokenProviders();
 
         services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IReactionRepository, ReactionRepository>();
         
         return services;
     }
