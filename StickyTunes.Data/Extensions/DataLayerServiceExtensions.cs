@@ -6,9 +6,9 @@ using StickyTunes.Data.Models;
 using StickyTunes.Data.Repositories.Implementations;
 using StickyTunes.Data.Repositories.Interfaces;
 
-namespace StickyTunes.Data;
+namespace StickyTunes.Data.Extensions;
 
-public static class DataServicesRegistration
+public static class DataLayerServiceExtensions
 {
     public static IServiceCollection AddDataServices(this IServiceCollection services, IConfiguration configuration)
     {
