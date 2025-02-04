@@ -1,8 +1,6 @@
 using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.Configuration;
-using StickyTunes.Data.Models;
 
 namespace StickyTunes.Business.Services.Implementations;
 
