@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
@@ -48,11 +49,13 @@ public class SpotifyService
             throw new Exception("Failed to retrieve access token.");
         }
 
-        // Parse the response to get the token
-        var jsonResponse = await response.Content.ReadAsStringAsync();
-        var token = JsonDocument.Parse(jsonResponse).RootElement.GetProperty("access_token").GetString();
+        // Deserialize the JSON response body to a dictionary
+        var responseBody = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
 
-        return token;
+        // Accessing a value from the dictionary
+        var accessToken = responseBody["access_token"].ToString();
+
+        return accessToken;
     }
 
     /* Returns an empty string if it doesn't match the expected structure */
